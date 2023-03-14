@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Regex</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+  <style>
+    * {
+      --light-bgcolor: #f0f0f0;
+      --div-bgcolor: #dedede; 
+      --active-bgcolor: #dfdfdf;
+      --accent-color: #2c2c2c;
+      --border-color: #2c2c2c;
+      font-family: monospace;
+      font-size: 98%;
+    }
+    html, body {
+      margin: 0;
+      background-color: var(--light-bgcolor);
+    }
+    div {
+      padding: 25px;
+      margin: 50px auto 20px;
+      width: calc(100% - 100px);
+      max-width: 500px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background-color: var(--div-bgcolor);
+    }
+    h4 {
+      margin: 0 0;
+      padding: 0;
+    }
+    input, textarea {
+      margin: 5px auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1px 7px 1px;
+      background-color: var(--light-bgcolor);
+    }
+    input.text, textarea.text {
+      width: calc(100% - 20px);
+      height: 25px;
+      outline: none;
+    }
+    textarea.text {
+      padding: 7px;
+      height: 200px;
+    }
+    input.text {
+        width: calc(100% - 20px - 50px);
+    }
+    input.button, button {
+      min-width: 80px;
+      height: 30px;
+      color: var(--accent-color);
+    }
+    input.button:active {
+      background-color: var(--active-bgcolor);
+    }
+  </style>
+</head>
+<body>
+{% if not response %}
+  <div id="mail-div">
+    <h3 style="color: var(--accent-color);">Regex</h3>
+    <form method="POST" action="/parse">
+
+      <label for="regex">Regex:</label>
+      <input class="text" id="regex" name="regex" type="text" placeholder="Enter regex pattern" value="{{ regex_val }}" required/></br>
+      {% if regex_ierr %}<h4 style="color: tomato;">{{ regex_ierr }}</h4></br>{% endif %}
+
+      <textarea class="text" id="inputstr" name="inputstr" placeholder="Enter input string" required>{{ inputstr_val }}</textarea></br>
+      {% if inputstr_ierr %}<h4 style="color: tomato;">{{ inputstr_ierr }}</h4></br>{% endif %}
+
+      <input class="button" id="submit" type="submit" value="Submit"/>&nbsp;
+      <input class="button" id="reset" type="reset" value="Clear"/>
+    </form>
+  </div>
+{% else %}
+  <div id="response-div">
+    <h3 style="color: var(--accent-color);">Response</h3>
+    <pre>{{ response }}</pre>
+  </div>
+{% endif %}
+</body>
+</html>
