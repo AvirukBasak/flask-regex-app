@@ -95,7 +95,7 @@
   </div>
 {% else %}
   <div id="response-div">
-    <h3 style="color: var(--accent-color);">Response</h3>
+    <h3 style="color: var(--accent-color);">{% if matches_cnt < 0 %}Response{% else %}Found {{ matches_cnt }} matches{% endif %}</h3>
     <pre>{{ response | safe }}</pre>
   </div>
 {% endif %}

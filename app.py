@@ -3,13 +3,14 @@ import re
 
 app = Flask(__name__)
 
-def gen_response(resp, rgx, inp, rgxerr, inperr):
+def gen_response(resp, rgx, inp, rgxerr, inperr, count=-1):
     return render_template('form.html',
         response      = resp,
         regex_val     = rgx,
         inputstr_val  = inp,
         regex_ierr    = rgxerr,
-        inputstr_ierr = inperr
+        inputstr_ierr = inperr,
+        matches_cnt   = count
     )
 
 
@@ -85,9 +86,10 @@ def parse():
             inputstr_ierr
         )
     response = inputstr_val
+    matches = list(matches)
     TAGOPEN = "<font class=\"ptrn-mark\">"
     TAGCLOSE = "</font>"
-    for m in reversed(list(matches)):
+    for m in reversed(matches):
         l, u = m.span()
         response = insert_str(response, u, TAGCLOSE)
         response = insert_str(response, l, TAGOPEN)
@@ -96,9 +98,10 @@ def parse():
         regex_val,
         inputstr_val,
         regex_ierr,
-        inputstr_ierr
+        inputstr_ierr,
+        len(matches)
     )
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
