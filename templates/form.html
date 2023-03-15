@@ -74,6 +74,22 @@
         padding: 5px 0;
         overflow-x: auto;
     }
+    div.chkbox {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        width: auto;
+        height: auto;
+        margin: 5px 0;
+        padding: 0;
+        border: 0;
+    }
+    input.chkbox, label.chkbox {
+        margin: 0 0 0 0;
+    }
+    label.chkbox {
+        margin: 0 0 0 10px;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +101,27 @@
       <label for="regex">Regex:</label>
       <input class="text" id="regex" name="regex" type="text" placeholder="Enter regex pattern" value="{{ regex_val }}" required/></br>
       {% if regex_ierr %}<h4 style="color: tomato;">{{ regex_ierr }}</h4></br>{% endif %}
+
+      <div class="chkbox">
+        <input class="chkbox" type="checkbox" name="re.I"/>
+        <label class="chkbox" for="re.I">Ignore case</label>
+      </div>
+      <div class="chkbox">
+        <input class="chkbox" type="checkbox" name="re.M"/>
+        <label class="chkbox" for="re.M">Multiline</label>
+      </div>
+      <div class="chkbox">
+        <input class="chkbox" type="checkbox" name="re.A"/>
+        <label class="chkbox" for="re.A">ASCII only, not Unicode</label>
+      </div>
+      <div class="chkbox">
+        <input class="chkbox" type="checkbox" name="re.S"/>
+        <label class="chkbox" for="re.S">Dot matches any character</label>
+      </div>
+      <div class="chkbox">
+        <input class="chkbox" type="checkbox" name="re.L"/>
+        <label class="chkbox" for="re.L">Match based on locale</label>
+      </div>
 
       <textarea class="text" id="inputstr" name="inputstr" placeholder="Enter input string" required>{{ inputstr_val }}</textarea></br>
       {% if inputstr_ierr %}<h4 style="color: tomato;">{{ inputstr_ierr }}</h4></br>{% endif %}

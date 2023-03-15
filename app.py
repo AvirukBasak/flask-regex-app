@@ -21,17 +21,12 @@ def insert_str(s, i, ns):
 
 @app.route('/')
 def index():
-    response = False
-    regex_val = ''
-    inputstr_val = ''
-    regex_ierr = ''
-    inputstr_ierr = ''
     return gen_response(
-        response,
-        regex_val,
-        inputstr_val,
-        regex_ierr,
-        inputstr_ierr
+        False,
+        '',
+        '',
+        '',
+        ''
     )
 
 
@@ -39,22 +34,33 @@ def index():
 def parse():
     response = False
     regex_val = ''
+    regex_flags = 0
     inputstr_val = ''
     regex_ierr = ''
     inputstr_ierr = ''
     # function to evaluate parameters
     def evaluate_params():
-        nonlocal response, regex_val, inputstr_val, regex_ierr, inputstr_ierr
+        nonlocal response
+        nonlocal regex_val, regex_flags
+        nonlocal inputstr_val
+        nonlocal regex_ierr, inputstr_ierr
         # get form data
+        print([ k for k in request.form ])
         regex_val = request.form['regex'].strip() if 'regex' in request.form else False
         inputstr_val = request.form['inputstr'].strip() if 'inputstr' in request.form else False
+        for key in request.form:
+            if 're.I' == key: regex_flags |= re.I
+            if 're.M' == key: regex_flags |= re.M
+            if 're.A' == key: regex_flags |= re.A
+            if 're.S' == key: regex_flags |= re.S
+            if 're.L' == key: regex_flags |= re.L
         errflag = False
         # validate input
         if not regex_val or len(regex_val) == 0:
-            regex_ierr = 'Malformed regex'
+            regex_ierr = 'regex: malformed input'
             errflag = True
         if not inputstr_val or len(inputstr_val) == 0:
-            inputstr_ierr = 'Malformed input'
+            inputstr_ierr = 'text: malformed input'
             errflag = True
         # return on error
         if errflag: return False
@@ -75,7 +81,7 @@ def parse():
         )
     # regex matching code
     try:
-        matches = re.finditer(regex_val, inputstr_val)
+        matches = re.finditer(regex_val, inputstr_val, regex_flags)
     except Exception as e:
         regex_ierr = 'regex: %s' % e
         return gen_response(
@@ -104,4 +110,4 @@ def parse():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
