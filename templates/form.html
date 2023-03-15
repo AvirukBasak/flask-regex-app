@@ -29,7 +29,11 @@
     }
     h4 {
       margin: 0 0;
-      padding: 0;
+      padding: 5px;
+      border: 0.5px solid #DEBEBE;
+      border-radius: 10px;
+      width: calc(100% - 15px);
+      background-color: #DED1D1;
     }
     input, textarea {
       margin: 5px auto;
@@ -46,6 +50,8 @@
     textarea.text {
       padding: 7px;
       height: 200px;
+      white-space: nowrap;
+      overflow-x: auto;
     }
     input.text {
         width: calc(100% - 20px - 50px);
@@ -57,6 +63,16 @@
     }
     input.button:active {
       background-color: var(--active-bgcolor);
+    }
+    font.ptrn-mark {
+        margin: 0 2px;
+        padding: 0 2px;
+        background-color: #DBDEEC;
+        border: 0.5px solid #ABAAC5; 
+    }
+    pre {
+        padding: 5px 0;
+        overflow-x: auto;
     }
   </style>
 </head>
@@ -80,7 +96,7 @@
 {% else %}
   <div id="response-div">
     <h3 style="color: var(--accent-color);">Response</h3>
-    <pre>{{ response }}</pre>
+    <pre>{{ response | safe }}</pre>
   </div>
 {% endif %}
 </body>
