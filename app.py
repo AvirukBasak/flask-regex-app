@@ -45,7 +45,6 @@ def parse():
         nonlocal inputstr_val
         nonlocal regex_ierr, inputstr_ierr
         # get form data
-        print([ k for k in request.form ])
         regex_val = request.form['regex'].strip() if 'regex' in request.form else False
         inputstr_val = request.form['inputstr'].strip() if 'inputstr' in request.form else False
         for key in request.form:
